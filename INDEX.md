@@ -6,16 +6,6 @@
 - `_pending/segment_sum.rs`
 - `_pending/segment_sum_2d.rs`
 
-## graph (8)
-- `_pending/auxiliary_tree.rs`
-- `_pending/backward_analysis_of_game_graph.rs`
-- `_pending/centoroid_decomp.rs`
-- `_pending/dfs_order_gen.rs`
-- `_pending/grid_congruence.rs`
-- `_pending/hld_2.rs`
-- `_pending/rerooting_2.rs`
-- `_pending/tree_decompose.rs`
-
 ## math (5)
 - `_pending/fft.rs`
 - `_pending/fht.rs`

@@ -66,6 +66,7 @@ CI（GitHub Actions）でも上記を自動実行しています。
 | `math::vector_lcm` | 配列全体の gcd/lcm と checked lcm |
 | `math::gaussian_elimination` | 実数行列の掃き出し法（rank・RREF・連立一次方程式） |
 | `algo::bit_enumeration` | ビット全探索・部分集合/部分 mask 列挙 |
+| `algo::grid_transform` | グリッドの回転・転置・反転、回転＋平行移動での合同判定 |
 | `ds::dsu` | Union-Find（ACL 互換 API） |
 | `ds::fenwick` | Fenwick Tree（点加算・区間和、ジェネリック） |
 | `ds::segtree` | Segment Tree（モノイド、点更新・区間積） |
@@ -84,6 +85,9 @@ CI（GitHub Actions）でも上記を自動実行しています。
 | `graph::scc` | 強連結成分分解（Kosaraju、トポロジカル順） |
 | `graph::hld` | Heavy-Light Decomposition（LCA・パス/部分木区間分解） |
 | `graph::rerooting` | 全方位木 DP（rerooting DP） |
+| `graph::auxiliary_tree` | Auxiliary Tree（virtual tree。指定頂点集合＋LCA の圧縮木） |
+| `graph::centroid` | 木の重心・重心分解（centroid decomposition） |
+| `graph::retrograde_analysis` | 後退解析（ゲームグラフの勝ち/負け/引き分け判定） |
 | `geometry::basic` | 整数座標の基本幾何（点・外積・ccw・線分交差・多角形面積） |
 | `dp::digit_dp` | 桁 DP（上限以下の整数の桁和分布・個数・総和） |
 | `string::rolling_hash` | ローリングハッシュ（mod 2^61-1） |

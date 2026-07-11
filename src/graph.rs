@@ -19,3 +19,6 @@ pub mod hld;
 pub mod rerooting;
 pub mod components;
 pub mod grid_bfs;
+pub mod auxiliary_tree;
+pub mod centroid;
+pub mod retrograde_analysis;
