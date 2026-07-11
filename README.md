@@ -60,11 +60,18 @@ CI（GitHub Actions）でも上記を自動実行しています。
 |---|---|
 | `math::modint` | mod 演算 `Mint` ＋組合せ `Comb`（nCr/nPr/nHr）。MOD 内蔵 |
 | `math::matrix` | `Mint` 行列（積・累乗）。`math::modint` に依存 |
+| `math::prime` | 線形篩・素数列挙・Miller-Rabin・Pollard rho 素因数分解 |
+| `math::number` | gcd/lcm・拡張ユークリッド・一般 mod 逆元・CRT |
 | `ds::dsu` | Union-Find（ACL 互換 API） |
 | `ds::fenwick` | Fenwick Tree（点加算・区間和、ジェネリック） |
 | `ds::segtree` | Segment Tree（モノイド、点更新・区間積） |
+| `ds::lazy_segtree` | 遅延伝播セグメント木（ACL 準拠、区間作用・区間積） |
+| `graph::dijkstra` | ダイクストラ（距離・経路復元） |
+| `graph::bfs` | BFS（重みなし最短路） |
+| `string::rolling_hash` | ローリングハッシュ（mod 2^61-1） |
 
 未移行分は `_pending/` にあり、順次 `src/` へ移行していきます（一覧は [`INDEX.md`](./INDEX.md)）。
+方針は [`AGENTS.md`](./AGENTS.md) を参照。
 
 ## ライセンス
 
