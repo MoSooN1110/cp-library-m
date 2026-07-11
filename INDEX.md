@@ -2,17 +2,9 @@
 
 `src/` へ未移行の抽出ライブラリ一覧（移行の元ネタ）。移行済みは README を参照。
 
-## ds (10)
-- `_pending/implicit_treap.rs`
-- `_pending/lazy_segtree_range_affine_range_add.rs`
-- `_pending/rheap.rs`
+## ds (2)
 - `_pending/segment_sum.rs`
 - `_pending/segment_sum_2d.rs`
-- `_pending/segtree_beats.rs`
-- `_pending/wavelet_matrix.rs`
-- `_pending/wavelet_matrix2.rs`
-- `_pending/wavelet_matrix3.rs`
-- `_pending/wavelet_matrix4.rs`
 
 ## graph (8)
 - `_pending/auxiliary_tree.rs`

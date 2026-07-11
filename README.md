@@ -74,6 +74,9 @@ CI（GitHub Actions）でも上記を自動実行しています。
 | `ds::dynamic_segtree` | 動的セグメント木（大きな添字範囲での疎な点更新・区間積） |
 | `ds::slope_trick` | Slope Trick（区分線形凸関数の最小値管理） |
 | `ds::multiset` | 多重集合（BTreeMap ベース、順序境界つき） |
+| `ds::wavelet_matrix` | Wavelet Matrix（区間頻度・k 番目・range_freq、値域 `u64`） |
+| `ds::segtree_beats` | Segment Tree Beats（区間 chmin/chmax・区間加算・区間和、`i64`） |
+| `ds::implicit_treap` | Implicit Treap（挿入・削除・分割・結合 O(log n) の可変長列） |
 | `graph::dijkstra` | ダイクストラ（距離・経路復元・2 番目に短い距離） |
 | `graph::bfs` | BFS（重みなし最短路） |
 | `graph::components` | 無向グラフの連結成分分解（成分 ID・成分リスト・連結判定） |

@@ -15,3 +15,6 @@ pub mod bitset;
 pub mod dynamic_segtree;
 pub mod segtree_2d;
 pub mod slope_trick;
+pub mod wavelet_matrix;
+pub mod segtree_beats;
+pub mod implicit_treap;

@@ -241,6 +241,28 @@ mod tests {
     }
 
     #[test]
+    fn range_affine_range_sum() {
+        // S=(sum,len), F=(mul,add): x -> mul*x + add
+        let v: Vec<(i64, i64)> = [1i64, 2, 3, 4, 5].iter().map(|&x| (x, 1)).collect();
+        let mut seg = LazySegTree::from_slice(
+            &v,
+            (0, 0),
+            |a: (i64, i64), b: (i64, i64)| (a.0 + b.0, a.1 + b.1),
+            (1i64, 0i64), // id: x -> x
+            |f: (i64, i64), x: (i64, i64)| (f.0 * x.0 + f.1 * x.1, x.1),
+            |f: (i64, i64), g: (i64, i64)| (f.0 * g.0, f.0 * g.1 + f.1), // f after g
+        );
+        assert_eq!(seg.prod(0..5).0, 15);
+        seg.apply_range(1..4, (2, 1)); // [2,3,4]->[5,7,9]
+        assert_eq!(seg.prod(0..5).0, 1 + 5 + 7 + 9 + 5);
+        seg.apply_range(0..5, (1, 10)); // 全体 +10
+        assert_eq!(
+            seg.prod(0..5).0,
+            (1 + 10) + (5 + 10) + (7 + 10) + (9 + 10) + (5 + 10)
+        );
+    }
+
+    #[test]
     fn brute_random() {
         // 決定的擬似乱数でナイーブ比較
         let n = 30;
