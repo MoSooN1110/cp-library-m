@@ -17,6 +17,9 @@ pub fn gcd(a: u64, b: u64) -> u64 {
 }
 
 pub fn lcm(a: u64, b: u64) -> u64 {
+    if a == 0 || b == 0 {
+        return 0;
+    }
     a / gcd(a, b) * b
 }
 
@@ -78,6 +81,8 @@ mod tests {
         assert_eq!(gcd(12, 18), 6);
         assert_eq!(lcm(4, 6), 12);
         assert_eq!(gcd(0, 5), 5);
+        assert_eq!(lcm(0, 0), 0);
+        assert_eq!(lcm(0, 5), 0);
     }
     #[test]
     fn extgcd_prop() {

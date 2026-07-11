@@ -7,6 +7,10 @@ use cplib::ds::segtree::*;
 use cplib::ds::lazy_segtree::*;
 use cplib::ds::dsu::*;
 use cplib::graph::dijkstra::*;
+use cplib::graph::components::*;
+use cplib::graph::grid_bfs::grid_bfs;
+use cplib::geometry::basic::*;
+use cplib::dp::digit_dp::*;
 use cplib::string::rolling_hash::*;
 
 fn main() {
@@ -41,8 +45,21 @@ fn main() {
     // dijkstra
     let mut g = vec![vec![]; 3];
     g[0].push((1usize, 2u64));
+    g[0].push((2usize, 10u64));
     g[1].push((2usize, 3u64));
     println!("dist2={}", dijkstra(&g, 0)[2]);
+    println!("dist2_second={}", dijkstra_top2(&g, 0)[2][1]);
+
+    // connected components
+    let ug = vec![vec![1], vec![0], vec![]];
+    println!("components={}", connected_component_count(&ug));
+
+    // grid bfs
+    let passable = vec![vec![true, true], vec![false, true]];
+    println!("grid_dist={}", grid_bfs(&passable, (0, 0))[1][1]);
+
+    // digit dp
+    println!("digit_sum_count={}", count_by_digit_sum_leq(20, 10, 2));
 
     // number theory
     println!("crt={:?}", crt(&[2, 3], &[3, 5]));
@@ -53,4 +70,15 @@ fn main() {
     // rolling hash
     let rh = RollingHash::new(b"abcabc");
     println!("rh={}", rh.eq(0..3, 3..6));
+
+    // geometry
+    println!(
+        "intersect={}",
+        segments_intersect(
+            Point::new(0, 0),
+            Point::new(4, 0),
+            Point::new(2, -1),
+            Point::new(2, 1),
+        )
+    );
 }

@@ -12,3 +12,5 @@ pub mod digit_sum;
 pub mod diophantine;
 pub mod ratio;
 pub mod gauss_xor;
+pub mod gaussian_elimination;
+pub mod vector_lcm;

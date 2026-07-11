@@ -6,3 +6,4 @@ pub mod max_rectangle;
 pub mod inversion;
 pub mod ternary_search;
 pub mod chmin_chmax;
+pub mod bit_enumeration;

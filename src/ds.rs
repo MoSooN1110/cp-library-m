@@ -12,3 +12,6 @@ pub mod segment_set;
 pub mod convex_hull_trick;
 pub mod median_set;
 pub mod bitset;
+pub mod dynamic_segtree;
+pub mod segtree_2d;
+pub mod slope_trick;

@@ -7,6 +7,7 @@ pub mod math;
 pub mod ds;
 pub mod graph;
 pub mod string;
+pub mod geometry;
 pub mod algo;
 pub mod misc;
 pub mod dp;
