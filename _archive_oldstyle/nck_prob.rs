@@ -1,0 +1,21 @@
+// source snippet: key=nck_prob  prefix=nck_prob
+// (旧実装/CamelCase。lib_ 版の旧バージョンの可能性あり)
+
+#[allow(dead_code)]
+/// v[n][k] = nCk / 2^n
+fn nck_prob(n: usize) -> Vec<Vec<f64>> {
+    let mut res = vec![vec![1.0]];
+    for _ in 1..n {
+        let mut v = Vec::new();
+        {
+            let last = res.last().unwrap();
+            v.push(last.first().unwrap() / 2.0);
+            for i in 0..last.len() - 1 {
+                v.push((last[i] + last[i + 1]) / 2.0);
+            }
+            v.push(last.last().unwrap() / 2.0);
+        }
+        res.push(v);
+    }
+    res
+}
