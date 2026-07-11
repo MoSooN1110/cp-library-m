@@ -9,3 +9,6 @@ pub mod lca;
 pub mod euler_tour;
 pub mod tree_diameter;
 pub mod doubling;
+pub mod max_flow;
+pub mod min_cost_flow;
+pub mod bipartite_matching;
