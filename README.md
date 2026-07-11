@@ -65,6 +65,10 @@ CI（GitHub Actions）でも上記を自動実行しています。
 | `math::number` | gcd/lcm・拡張ユークリッド・一般 mod 逆元・CRT |
 | `math::vector_lcm` | 配列全体の gcd/lcm と checked lcm |
 | `math::gaussian_elimination` | 実数行列の掃き出し法（rank・RREF・連立一次方程式） |
+| `math::convolution` | NTT 畳み込み（mod 998244353）。`math::modint` に依存 |
+| `math::fft` | f64 FFT（実数畳み込み・任意 mod 乗算、15bit 分割） |
+| `math::hadamard` | Walsh–Hadamard 変換と XOR/AND/OR 畳み込み |
+| `math::prime_count` | 高速素数計数 π(n)（Lucy_Hedgehog 系、O(n^(3/4))） |
 | `algo::bit_enumeration` | ビット全探索・部分集合/部分 mask 列挙 |
 | `algo::grid_transform` | グリッドの回転・転置・反転、回転＋平行移動での合同判定 |
 | `ds::dsu` | Union-Find（ACL 互換 API） |

@@ -14,3 +14,7 @@ pub mod ratio;
 pub mod gauss_xor;
 pub mod gaussian_elimination;
 pub mod vector_lcm;
+pub mod convolution;
+pub mod fft;
+pub mod hadamard;
+pub mod prime_count;

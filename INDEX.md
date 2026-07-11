@@ -2,16 +2,8 @@
 
 `src/` へ未移行の抽出ライブラリ一覧（移行の元ネタ）。移行済みは README を参照。
 
-## ds (2)
-- `_pending/segment_sum.rs`
-- `_pending/segment_sum_2d.rs`
-
-## math (5)
-- `_pending/fft.rs`
-- `_pending/fht.rs`
+## math (1)
 - `_pending/fps.rs`
-- `_pending/polynomial.rs`
-- `_pending/prime_count.rs`
 
 ## string (1)
 - `_pending/substr.rs`
