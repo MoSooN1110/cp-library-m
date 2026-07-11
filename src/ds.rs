@@ -11,3 +11,4 @@ pub mod binary_trie;
 pub mod segment_set;
 pub mod convex_hull_trick;
 pub mod median_set;
+pub mod bitset;
