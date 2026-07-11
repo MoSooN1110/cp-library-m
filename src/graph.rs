@@ -12,3 +12,6 @@ pub mod doubling;
 pub mod max_flow;
 pub mod min_cost_flow;
 pub mod bipartite_matching;
+pub mod lowlink;
+pub mod functional_graph;
+pub mod two_coloring;
