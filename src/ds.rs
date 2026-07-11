@@ -3,3 +3,7 @@ pub mod fenwick;
 pub mod segtree;
 pub mod lazy_segtree;
 pub mod multiset;
+pub mod cumsum;
+pub mod cumsum_2d;
+pub mod weighted_dsu;
+pub mod sparse_table;
