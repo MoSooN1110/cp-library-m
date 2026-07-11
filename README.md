@@ -66,9 +66,12 @@ CI（GitHub Actions）でも上記を自動実行しています。
 | `ds::fenwick` | Fenwick Tree（点加算・区間和、ジェネリック） |
 | `ds::segtree` | Segment Tree（モノイド、点更新・区間積） |
 | `ds::lazy_segtree` | 遅延伝播セグメント木（ACL 準拠、区間作用・区間積） |
+| `ds::multiset` | 多重集合（BTreeMap ベース、順序境界つき） |
 | `graph::dijkstra` | ダイクストラ（距離・経路復元） |
 | `graph::bfs` | BFS（重みなし最短路） |
+| `graph::scc` | 強連結成分分解（Kosaraju、トポロジカル順） |
 | `string::rolling_hash` | ローリングハッシュ（mod 2^61-1） |
+| `string::z_algorithm` | Z-algorithm |
 
 未移行分は `_pending/` にあり、順次 `src/` へ移行していきます（一覧は [`INDEX.md`](./INDEX.md)）。
 方針は [`AGENTS.md`](./AGENTS.md) を参照。
