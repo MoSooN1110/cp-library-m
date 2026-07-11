@@ -5,3 +5,7 @@ pub mod bellman_ford;
 pub mod warshall_floyd;
 pub mod topo_sort;
 pub mod mst;
+pub mod lca;
+pub mod euler_tour;
+pub mod tree_diameter;
+pub mod doubling;
