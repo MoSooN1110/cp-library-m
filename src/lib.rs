@@ -8,3 +8,4 @@ pub mod ds;
 pub mod graph;
 pub mod string;
 pub mod algo;
+pub mod misc;

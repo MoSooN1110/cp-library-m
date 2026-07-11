@@ -8,3 +8,5 @@ pub mod floor_sum;
 pub mod lucas;
 pub mod garner;
 pub mod xor_basis;
+pub mod digit_sum;
+pub mod diophantine;

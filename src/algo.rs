@@ -4,3 +4,5 @@ pub mod next_permutation;
 pub mod compress;
 pub mod max_rectangle;
 pub mod inversion;
+pub mod ternary_search;
+pub mod chmin_chmax;
