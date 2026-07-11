@@ -7,3 +7,7 @@ pub mod cumsum;
 pub mod cumsum_2d;
 pub mod weighted_dsu;
 pub mod sparse_table;
+pub mod binary_trie;
+pub mod segment_set;
+pub mod convex_hull_trick;
+pub mod median_set;
