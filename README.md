@@ -1,22 +1,70 @@
 # cp-library
 
-競技プログラミング用の Rust ライブラリ集（コピペ利用前提）。
+競技プログラミング用 Rust ライブラリ。**cargo で常時コンパイル検査**され、
+**expander** で依存を自動解決して提出用 1 ファイルに展開できます。
 
-- 大半は Zed スニペット（`lib_*` / `mlib_*`）から抽出したものです。テンプレ側の
-  `MOD` / `read_vec` などの基本定義に依存するファイルがあります。
-- **`modint.rs`** は MOD 内蔵・組合せ(`Comb`: nCr/nPr/nHr)内包で**単体動作**（検証済み）。
-- 一覧は [`INDEX.md`](./INDEX.md) を参照。
-
-## ディレクトリ
+## 構成
 
 ```
 .
-├── INDEX.md              カテゴリ別索引
-├── modint.rs             ★正準・単体動作（MOD内蔵＋組合せ）
-├── *.rs                  抽出ライブラリ（ds / graph / math / string / geometry / dp …）
-├── _archive_oldstyle/    旧 CamelCase 実装（SEG / UFT / LCA など）
-└── _archive_modint/      modint.rs に統合済みの旧 modint / 組合せ
+├── Cargo.toml            crate 名 = cplib
+├── src/
+│   ├── lib.rs            モジュールツリー宣言
+│   ├── math/             modint, matrix, ...
+│   └── ds/               dsu, fenwick, segtree, ...
+├── tools/expand.py       提出用 expander
+├── examples/             サンプル解答
+├── _pending/             未移行の抽出ライブラリ（順次 src/ へ移行）
+└── _archive_*/           旧実装・統合済み実装
 ```
+
+## 開発〜提出フロー
+
+**1. 解答を書く**（`cplib` を依存に持つ crate で、IDE 補完が効く状態で書く）
+
+```rust
+use cplib::ds::segtree::*;
+use cplib::math::modint::*;
+
+fn main() {
+    let seg = SegTree::from_slice(&[1i64, 3, 2], i64::MIN, |a, b| a.max(b));
+    println!("{}", seg.prod(0..3));
+}
+```
+
+`//@use ds::segtree` というマーカーコメントでも指定できます。
+
+**2. 提出用に展開**（依存ライブラリだけを inline した 1 ファイルを生成）
+
+```bash
+python3 tools/expand.py main.rs -o submit.rs
+```
+
+- `use cplib::...` / `//@use ...` から使用モジュールを検出
+- 各モジュール内の `crate::...` 参照から**依存を推移的に自動解決**
+- 必要なモジュールだけをクレートと同じ階層で先頭に inline
+- `submit.rs` は **cplib 非依存で単体コンパイル可能**
+
+## テスト
+
+```bash
+cargo test --lib                        # 全ライブラリのコンパイル＋単体テスト
+python3 tools/expand.py examples/sample_main.rs -o /tmp/s.rs && rustc /tmp/s.rs -o /tmp/s && /tmp/s
+```
+
+CI（GitHub Actions）でも上記を自動実行しています。
+
+## 収録ライブラリ（移行済み）
+
+| module | 内容 |
+|---|---|
+| `math::modint` | mod 演算 `Mint` ＋組合せ `Comb`（nCr/nPr/nHr）。MOD 内蔵 |
+| `math::matrix` | `Mint` 行列（積・累乗）。`math::modint` に依存 |
+| `ds::dsu` | Union-Find（ACL 互換 API） |
+| `ds::fenwick` | Fenwick Tree（点加算・区間和、ジェネリック） |
+| `ds::segtree` | Segment Tree（モノイド、点更新・区間積） |
+
+未移行分は `_pending/` にあり、順次 `src/` へ移行していきます（一覧は [`INDEX.md`](./INDEX.md)）。
 
 ## ライセンス
 

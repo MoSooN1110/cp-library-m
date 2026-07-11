@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: cargo test (全ライブラリのコンパイル＆単体テスト)
+        run: cargo test --lib
+
+      - name: expander smoke test (展開→提出ファイルが単体でコンパイル＆実行)
+        run: |
+          python3 tools/expand.py examples/sample_main.rs -o /tmp/submit.rs
+          rustc -O --edition 2021 /tmp/submit.rs -o /tmp/submit
+          /tmp/submit
