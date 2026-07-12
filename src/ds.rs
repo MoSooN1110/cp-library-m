@@ -18,3 +18,7 @@ pub mod slope_trick;
 pub mod wavelet_matrix;
 pub mod segtree_beats;
 pub mod implicit_treap;
+pub mod li_chao_tree;
+pub mod rollback_dsu;
+pub mod sliding_window_min;
+pub mod swag;

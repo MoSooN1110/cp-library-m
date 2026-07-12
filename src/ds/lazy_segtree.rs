@@ -1,18 +1,16 @@
 //! 遅延伝播セグメント木（ACL 準拠、モノイド作用）。関数ポインタで与える。
+//! `i64` の区間加算/区間更新 × max/min/sum は専用ラッパーも用意している。
 //!
 //! ```
 //! use cplib::ds::lazy_segtree::*;
-//! // 区間加算・区間和。S=(sum,len), F=add
-//! let mut seg = LazySegTree::new(
-//!     5,
-//!     (0i64, 1i64),                                   // e: 単位元（len=1 は from_slice 用）
-//!     |a: (i64, i64), b: (i64, i64)| (a.0 + b.0, a.1 + b.1),
-//!     0i64,                                           // id: 恒等作用
-//!     |f: i64, x: (i64, i64)| (x.0 + f * x.1, x.1),   // mapping
-//!     |f: i64, g: i64| f + g,                         // composition
-//! );
-//! seg.apply_range(1..4, 3);
-//! assert_eq!(seg.prod(0..5).0, 9);
+//!
+//! let mut seg = RangeAddSum::from_slice_range_add_sum(&[1, 2, 3, 4, 5]);
+//! seg.add(1..4, 10);
+//! assert_eq!(seg.sum(0..5), 45);
+//!
+//! let mut max = RangeAssignMax::from_slice_range_assign_max(&[1, 2, 3, 4, 5]);
+//! max.assign(1..4, 0);
+//! assert_eq!(max.prod(0..5), 5);
 //! ```
 
 pub struct LazySegTree<S: Copy, F: Copy> {
@@ -211,6 +209,151 @@ impl<S: Copy, F: Copy> LazySegTree<S, F> {
     }
 }
 
+pub type RangeAddMax = LazySegTree<i64, i64>;
+pub type RangeAddMin = LazySegTree<i64, i64>;
+pub type RangeAssignMax = LazySegTree<i64, Option<i64>>;
+pub type RangeAssignMin = LazySegTree<i64, Option<i64>>;
+pub type RangeAddSum = LazySegTree<(i64, i64), i64>;
+pub type RangeAssignSum = LazySegTree<(i64, i64), Option<i64>>;
+
+#[inline]
+fn max_i64(a: i64, b: i64) -> i64 {
+    a.max(b)
+}
+
+#[inline]
+fn min_i64(a: i64, b: i64) -> i64 {
+    a.min(b)
+}
+
+#[inline]
+fn sum_pair(a: (i64, i64), b: (i64, i64)) -> (i64, i64) {
+    (a.0 + b.0, a.1 + b.1)
+}
+
+#[inline]
+fn add_i64(f: i64, x: i64) -> i64 {
+    x + f
+}
+
+#[inline]
+fn add_pair(f: i64, x: (i64, i64)) -> (i64, i64) {
+    (x.0 + f * x.1, x.1)
+}
+
+#[inline]
+fn compose_add(f: i64, g: i64) -> i64 {
+    f + g
+}
+
+#[inline]
+fn assign_i64(f: Option<i64>, x: i64) -> i64 {
+    f.unwrap_or(x)
+}
+
+#[inline]
+fn assign_pair(f: Option<i64>, x: (i64, i64)) -> (i64, i64) {
+    match f {
+        Some(v) => (v * x.1, x.1),
+        None => x,
+    }
+}
+
+#[inline]
+fn compose_assign(f: Option<i64>, g: Option<i64>) -> Option<i64> {
+    f.or(g)
+}
+
+fn sum_nodes(v: &[i64]) -> Vec<(i64, i64)> {
+    v.iter().map(|&x| (x, 1)).collect()
+}
+
+impl RangeAddMax {
+    pub fn range_add_max(n: usize) -> Self {
+        Self::from_slice_range_add_max(&vec![0; n])
+    }
+
+    pub fn from_slice_range_add_max(v: &[i64]) -> Self {
+        Self::from_slice(v, i64::MIN, max_i64, 0, add_i64, compose_add)
+    }
+
+    pub fn add(&mut self, range: std::ops::Range<usize>, x: i64) {
+        self.apply_range(range, x);
+    }
+}
+
+impl RangeAddMin {
+    pub fn range_add_min(n: usize) -> Self {
+        Self::from_slice_range_add_min(&vec![0; n])
+    }
+
+    pub fn from_slice_range_add_min(v: &[i64]) -> Self {
+        Self::from_slice(v, i64::MAX, min_i64, 0, add_i64, compose_add)
+    }
+}
+
+impl RangeAddSum {
+    pub fn range_add_sum(n: usize) -> Self {
+        Self::from_slice_range_add_sum(&vec![0; n])
+    }
+
+    pub fn from_slice_range_add_sum(v: &[i64]) -> Self {
+        let nodes = sum_nodes(v);
+        Self::from_slice(&nodes, (0, 0), sum_pair, 0, add_pair, compose_add)
+    }
+
+    pub fn add(&mut self, range: std::ops::Range<usize>, x: i64) {
+        self.apply_range(range, x);
+    }
+
+    pub fn sum(&mut self, range: std::ops::Range<usize>) -> i64 {
+        self.prod(range).0
+    }
+}
+
+impl RangeAssignMax {
+    pub fn range_assign_max(n: usize) -> Self {
+        Self::from_slice_range_assign_max(&vec![0; n])
+    }
+
+    pub fn from_slice_range_assign_max(v: &[i64]) -> Self {
+        Self::from_slice(v, i64::MIN, max_i64, None, assign_i64, compose_assign)
+    }
+
+    pub fn assign(&mut self, range: std::ops::Range<usize>, x: i64) {
+        self.apply_range(range, Some(x));
+    }
+}
+
+impl RangeAssignMin {
+    pub fn range_assign_min(n: usize) -> Self {
+        Self::from_slice_range_assign_min(&vec![0; n])
+    }
+
+    pub fn from_slice_range_assign_min(v: &[i64]) -> Self {
+        Self::from_slice(v, i64::MAX, min_i64, None, assign_i64, compose_assign)
+    }
+}
+
+impl RangeAssignSum {
+    pub fn range_assign_sum(n: usize) -> Self {
+        Self::from_slice_range_assign_sum(&vec![0; n])
+    }
+
+    pub fn from_slice_range_assign_sum(v: &[i64]) -> Self {
+        let nodes = sum_nodes(v);
+        Self::from_slice(&nodes, (0, 0), sum_pair, None, assign_pair, compose_assign)
+    }
+
+    pub fn assign(&mut self, range: std::ops::Range<usize>, x: i64) {
+        self.apply_range(range, Some(x));
+    }
+
+    pub fn sum(&mut self, range: std::ops::Range<usize>) -> i64 {
+        self.prod(range).0
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -289,5 +432,38 @@ mod tests {
                 assert_eq!(seg.prod(l..r).0, s);
             }
         }
+    }
+
+    #[test]
+    fn builtin_range_add_max_min_sum() {
+        let mut max = RangeAddMax::from_slice_range_add_max(&[1, 2, 3, 4, 5]);
+        let mut min = RangeAddMin::from_slice_range_add_min(&[1, 2, 3, 4, 5]);
+        let mut sum = RangeAddSum::from_slice_range_add_sum(&[1, 2, 3, 4, 5]);
+        max.add(1..4, 10);
+        min.add(1..4, 10);
+        sum.add(1..4, 10);
+        assert_eq!(max.prod(0..5), 14);
+        assert_eq!(min.prod(0..5), 1);
+        assert_eq!(sum.sum(0..5), 45);
+        assert_eq!(sum.get(2).0, 13);
+    }
+
+    #[test]
+    fn builtin_range_assign_max_min_sum() {
+        let mut max = RangeAssignMax::from_slice_range_assign_max(&[1, 2, 3, 4, 5]);
+        let mut min = RangeAssignMin::from_slice_range_assign_min(&[1, 2, 3, 4, 5]);
+        let mut sum = RangeAssignSum::from_slice_range_assign_sum(&[1, 2, 3, 4, 5]);
+        max.assign(1..4, 0);
+        min.assign(1..4, 0);
+        sum.assign(1..4, 0);
+        assert_eq!(max.prod(0..5), 5);
+        assert_eq!(min.prod(0..5), 0);
+        assert_eq!(sum.sum(0..5), 6);
+        max.assign(0..5, -7);
+        min.assign(0..5, -7);
+        sum.assign(0..5, -7);
+        assert_eq!(max.prod(0..5), -7);
+        assert_eq!(min.prod(0..5), -7);
+        assert_eq!(sum.sum(0..5), -35);
     }
 }

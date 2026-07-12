@@ -6,6 +6,7 @@ pub mod grid_transform;
 pub mod inversion;
 pub mod lis;
 pub mod max_rectangle;
+pub mod mo_algorithm;
 pub mod next_permutation;
 pub mod product;
 pub mod ternary_search;

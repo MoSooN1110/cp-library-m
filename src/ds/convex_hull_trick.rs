@@ -1,4 +1,5 @@
 //! Convex Hull Trick（最小値クエリ）。直線を傾き降順で追加、任意の x を三分探索で照会。
+//! 傾きの単調性が保証できない場合は `ds::li_chao_tree` を使う。
 //!
 //! ```
 //! use cplib::ds::convex_hull_trick::*;

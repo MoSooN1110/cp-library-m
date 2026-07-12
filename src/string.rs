@@ -5,3 +5,5 @@ pub mod substring;
 pub mod suffix_array;
 pub mod trie;
 pub mod z_algorithm;
+pub mod manacher;
+pub mod kmp;
