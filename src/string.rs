@@ -1,6 +1,7 @@
+pub mod lcs;
 pub mod rolling_hash;
-pub mod z_algorithm;
+pub mod run_length_encoding;
+pub mod substring;
 pub mod suffix_array;
 pub mod trie;
-pub mod run_length_encoding;
-pub mod lcs;
+pub mod z_algorithm;
